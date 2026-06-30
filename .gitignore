@@ -2,6 +2,9 @@
 # The repo ships no .bib data. Drop your own into assetsbib/ (see assetsbib/README.md).
 assetsbib/*.bib
 assetsbib/*.txt
+# corpus cache RDS that load_corpus() writes next to the .bib (contains the data!)
+assetsbib/*.rds
+*.corpus.rds
 
 # --- Generated outputs: NOT shipped (they would derive from licensed WoS data) ---
 runs/
