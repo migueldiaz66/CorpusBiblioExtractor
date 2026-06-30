@@ -184,6 +184,8 @@ more year of data — I had to **recreate the entire science-mapping analysis by
 biblioshiny. That recurring nightmare is exactly what this tool automates away, so that neither
 the next person nor the next *me* ever has to redo it manually again.
 
+📖 Write-up (Spanish): [*Bibliometría reproducible con R y bibliometrix*](https://www.migueldiazmacedo.com/bibliometria/bibliometria-reproducible/) — the why and how, on the author's blog.
+
 ## License & attribution
 
 **GPL-3** (see [`LICENSE.md`](LICENSE.md)). It builds on, requires, and bundles documentation
