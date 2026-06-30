@@ -11,7 +11,7 @@
 ^\.git.*$
 ^\.vscode$
 ^\.idea$
-^LICENSING\.md$
+^LICENSE
 ^DISCLAIMER\.md$
 ^CONTRIBUTING\.md$
 ^NOTICE\.md$
