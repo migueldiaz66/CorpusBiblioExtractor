@@ -1,0 +1,47 @@
+# --- Bring-your-own corpora: NEVER commit licensed data (e.g. Web of Science) ---
+# The repo ships no .bib data. Drop your own into assetsbib/ (see assetsbib/README.md).
+assetsbib/*.bib
+assetsbib/*.txt
+
+# --- Generated outputs: NOT shipped (they would derive from licensed WoS data) ---
+runs/
+ui_metadata/
+
+# --- Local, corpus-specific regression baseline (bootstrapped per corpus, not shipped) ---
+tests/fixtures/snapshots_*.json
+
+# --- Personal / internal Spanish design & retrospective notes (kept local, not published) ---
+docs/CONCLUSION.md
+docs/EXECUTION_PLAN.md
+docs/EXHAUSTIVE_ANALYSIS_PLAN.md
+docs/UI_METADATA_METHOD.md
+docs/PARITY_CHECK.md
+
+# --- renv: commit the lockfile, not the library ---
+renv/library/
+renv/local/
+renv/cellar/
+renv/staging/
+renv/python/
+renv/sandbox/
+
+# --- R / RStudio artifacts ---
+.Rproj.user/
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+*.Rproj
+*.Rcheck/
+*.tar.gz
+.httr-oauth
+
+# --- metadata extractor scratch output ---
+metadata_extractor/out/
+
+# --- OS / editors ---
+.DS_Store
+Thumbs.db
+*~
+.vscode/
+.idea/

@@ -1,0 +1,183 @@
+{
+  "meta": {
+    "generated_from": "EXHAUSTIVE_ANALYSIS_PLAN.md",
+    "note": "Full 42-section spec. Assets are the CORE outputs per section (plot/table/network html+net). A few elaborate GUI-derived assets (density overlays, fuzzy document-cluster tables, diachronic animations, per-slice thematic-evolution outputs) are deferred and will be added in a later pass.",
+    "seed": 42,
+    "field_codes": { "keywords_plus":"ID","authors_keywords":"DE","all_keywords":"KW_Merged","titles":"TI","abstracts":"AB","subject_categories":"WC" }
+  },
+  "sections": [
+    { "id":"1.1.1_import_or_load","tabName":"loadData","runner":"import_or_load","params":[],
+      "assets":[{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"2.1_filters","tabName":"filters","runner":"filters","params":[],
+      "assets":[{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"2.2_prisma_diagram","tabName":"prisma","runner":"prisma","params":[],
+      "assets":[{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.1.1_main_information","tabName":"mainInfo","runner":"main_information","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.1.2_annual_scientific_production","tabName":"annualScPr","runner":"annual_scientific_production","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.1.3_average_citations_per_year","tabName":"averageCitPerYear","runner":"average_citations_per_year","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.1.4_life_cycle","tabName":"lifeCycle","runner":"life_cycle","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.1.5_three_field_plot","tabName":"threeFieldPlot","runner":"three_field_plot","params":[],
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"}] },
+
+    { "id":"3.2.1_most_relevant_sources","tabName":"relevantSources","runner":"most_relevant_sources","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.2.2_most_local_cited_sources","tabName":"localCitedSources","runner":"most_local_cited_sources","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.2.3_bradford_law","tabName":"bradford","runner":"bradford","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.2.4_sources_local_impact","tabName":"sourceImpact","runner":"sources_local_impact",
+      "params":[{"key":"impact_measure","values":[{"name":"h_index","code":"h_index"},{"name":"g_index","code":"g_index"},{"name":"m_index","code":"m_index"},{"name":"total_citation","code":"total_citation"}]}],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.2.5_sources_production_over_time","tabName":"sourceDynamics","runner":"sources_production_over_time",
+      "params":[{"key":"occurrences","values":[{"name":"cumulate","code":"cumulate"},{"name":"per_year","code":"per_year"}]}],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.3.1.1_author_profile","tabName":"AuthorPage","runner":"author_profile","params":[],
+      "assets":[{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.3.1.2_most_relevant_authors","tabName":"mostRelAuthors","runner":"most_relevant_authors",
+      "params":[{"key":"measure","values":[{"name":"n_of_documents","code":"documents"},{"name":"n_of_documents_percent","code":"documents_percent"},{"name":"n_of_documents_fractionalized","code":"fractionalized"}]}],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.3.1.3_most_local_cited_authors","tabName":"mostLocalCitedAuthors","runner":"most_local_cited_authors","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.3.1.4_authors_production_over_time","tabName":"authorsProdOverTime","runner":"authors_production_over_time","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.3.1.5_lotka_law","tabName":"lotka","runner":"lotka_law","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.3.1.6_authors_local_impact","tabName":"authorImpact","runner":"authors_local_impact",
+      "params":[{"key":"measure","values":[{"name":"h_index","code":"h_index"},{"name":"g_index","code":"g_index"},{"name":"m_index","code":"m_index"},{"name":"total_citation","code":"total_citation"}]}],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.3.2.1_most_relevant_affiliations","tabName":"mostRelAffiliations","runner":"most_relevant_affiliations",
+      "params":[{"key":"disambiguation","values":[{"name":"yes","code":"yes"},{"name":"no","code":"no"}]}],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.3.2.2_affiliations_production_over_time","tabName":"AffOverTime","runner":"affiliations_production_over_time","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.3.3.1_corresponding_author_countries","tabName":"correspAuthorCountry","runner":"corresponding_author_countries","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.3.3.2_countries_scientific_production","tabName":"countryScientProd","runner":"countries_scientific_production","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.3.3.3_countries_production_over_time","tabName":"COOverTime","runner":"countries_production_over_time","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.3.3.4_most_cited_countries","tabName":"mostCitedCountries","runner":"most_cited_countries",
+      "params":[{"key":"measure","values":[{"name":"total_citations","code":"total_citations"},{"name":"average_article_citations","code":"average_article_citations"}]}],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.4.1.1_most_global_cited_documents","tabName":"mostGlobalCitDoc","runner":"most_global_cited_documents",
+      "params":[{"key":"measure","values":[{"name":"total_citations","code":"total_citations"},{"name":"total_citations_per_year","code":"total_citations_per_year"}]}],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.4.1.2_most_local_cited_documents","tabName":"mostLocalCitDoc","runner":"most_local_cited_documents","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.4.2.1_most_local_cited_references","tabName":"mostLocalCitRef","runner":"most_local_cited_references","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.4.2.2_references_spectroscopy","tabName":"ReferenceSpect","runner":"references_spectroscopy",
+      "params":[{"key":"median_window","values":[{"name":"centered","code":"centered"},{"name":"backward","code":"backward"}]}],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.4.3.1_most_frequent_words","tabName":"mostFreqWords","runner":"most_frequent_words",
+      "params":[
+        {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"},{"name":"subject_categories","code":"WC"}]},
+        {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
+      ],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.4.3.2_wordcloud","tabName":"wcloud","runner":"wordcloud",
+      "params":[
+        {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"},{"name":"subject_categories","code":"WC"}]},
+        {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
+      ],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.4.3.3_treemap","tabName":"treemap","runner":"treemap",
+      "params":[
+        {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"},{"name":"subject_categories","code":"WC"}]},
+        {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
+      ],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.4.3.4_words_frequency_over_time","tabName":"wordDynamics","runner":"words_frequency_over_time",
+      "params":[
+        {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"}]},
+        {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
+      ],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"3.4.3.5_trend_topics","tabName":"trendTopic","runner":"trend_topics",
+      "params":[
+        {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"}]},
+        {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
+      ],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"4.1.1.1_co_occurrence_network","tabName":"coOccurenceNetwork","runner":"co_occurrence_network","compute":{"n":50},
+      "params":[
+        {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"},{"name":"subject_categories","code":"WC"}]},
+        {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
+      ],
+      "assets":[{"id":"network_html","type":"network_html","filename":"network.html"},{"id":"network_net","type":"network_net","filename":"network.net"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"},{"id":"degree_plot","type":"figure_png","filename":"degree_plot.png"}] },
+
+    { "id":"4.1.1.2_thematic_map","tabName":"thematicMap","runner":"thematic_map",
+      "params":[
+        {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"}]},
+        {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]},
+        {"key":"stemming","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"no","code":false},{"name":"yes","code":true}]}
+      ],
+      "assets":[{"id":"map","type":"figure_png","filename":"map.png"},{"id":"network_html","type":"network_html","filename":"network.html"},{"id":"network_net","type":"network_net","filename":"network.net"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"},{"id":"clusters","type":"table_xlsx","filename":"clusters.xlsx"}] },
+
+    { "id":"4.1.1.3_thematic_evolution","tabName":"thematicEvolution","runner":"thematic_evolution",
+      "params":[
+        {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"}]},
+        {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
+      ],
+      "assets":[{"id":"map","type":"plot_html","filename":"map.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"4.1.2.1_factorial_analysis","tabName":"factorialAnalysis","runner":"factorial_analysis","compute":{"max_terms":50},
+      "params":[
+        {"key":"method","values":[{"name":"correspondence_analysis","code":"CA"},{"name":"multiple_correspondence_analysis","code":"MCA"},{"name":"multidimensional_scaling","code":"MDS"}]},
+        {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"}]},
+        {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
+      ],
+      "assets":[{"id":"word_map","type":"figure_png","filename":"word_map.png"},{"id":"words_by_cluster","type":"table_xlsx","filename":"words_by_cluster.xlsx"},{"id":"articles_by_cluster","type":"table_xlsx","filename":"articles_by_cluster.xlsx"}] },
+
+    { "id":"4.2.1_co_citation_network","tabName":"coCitationNetwork","runner":"co_citation_network","compute":{"n":50},
+      "params":[{"key":"field","values":[{"name":"cited_references","code":"references"},{"name":"cited_authors","code":"authors"},{"name":"cited_sources","code":"sources"}]}],
+      "assets":[{"id":"network_html","type":"network_html","filename":"network.html"},{"id":"network_net","type":"network_net","filename":"network.net"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"},{"id":"degree_plot","type":"figure_png","filename":"degree_plot.png"}] },
+
+    { "id":"4.2.2_historiograph","tabName":"historiograph","runner":"historiograph","params":[],
+      "assets":[{"id":"network_html","type":"network_html","filename":"network.html"},{"id":"network_net","type":"network_net","filename":"network.net"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+
+    { "id":"4.3.1_collaboration_network","tabName":"collabNetwork","runner":"collaboration_network","compute":{"n":50},
+      "params":[{"key":"field","values":[{"name":"authors","code":"authors"},{"name":"institutions","code":"universities"},{"name":"countries","code":"countries"}]}],
+      "assets":[{"id":"network_html","type":"network_html","filename":"network.html"},{"id":"network_net","type":"network_net","filename":"network.net"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"},{"id":"degree_plot","type":"figure_png","filename":"degree_plot.png"}] },
+
+    { "id":"4.3.2_countries_collaboration_world_map","tabName":"collabWorldMap","runner":"countries_collaboration_world_map","params":[],
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] }
+  ]
+}

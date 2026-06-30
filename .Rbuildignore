@@ -1,0 +1,17 @@
+^assetsbib$
+^runs$
+^renv$
+^renv\.lock$
+^docs$
+^Makefile$
+^make\.R$
+^ui_metadata$
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.git.*$
+^\.vscode$
+^\.idea$
+^LICENSE\.md$
+^DISCLAIMER\.md$
+^CONTRIBUTING\.md$
+^NOTICE\.md$

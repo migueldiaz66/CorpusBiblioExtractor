@@ -1,0 +1,18 @@
+# Generated/maintained by hand for CorpusBiblioExtractor.
+# Public API (everything else is package-internal).
+
+export(cbe_run)
+export(cbe_build_index)
+export(cbe_extract_ui)
+export(cbe_verify_parity)
+export(cbe_check_versions)
+
+# bibliometrix is also in Depends (attached) — it is needed *attached* so that
+# convert2df()'s internal data("bibtag") resolves; importing it here additionally
+# satisfies the namespace when loaded-but-not-attached.
+import(bibliometrix)
+# These are used only inside the anonymous runner functions registered at load,
+# which the static check does not see; declare them explicitly.
+importFrom(dplyr, group_by)
+importFrom(plotly, plot_ly)
+importFrom(treemapify, geom_treemap)

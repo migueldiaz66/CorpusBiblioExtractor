@@ -1,0 +1,43 @@
+Package: CorpusBiblioExtractor
+Title: Exhaustive Biblioshiny Sweeps and UI-Metadata Extraction from a Bibliographic Corpus
+Version: 0.1.0
+Authors@R:
+    person("Miguel Jesus", "Diaz Macedo", email = "miguel.diazmacedo@gmail.com",
+           role = c("aut", "cre"))
+Description: Drives 'bibliometrix' directly (no GUI, no Python) to run the full
+    Cartesian sweep of the biblioshiny "Main Configuration" selectors over a
+    bibliographic corpus, materialising every output asset (tables as .xlsx,
+    static figures as .png, interactive networks and Sankeys as .html, Pajek
+    .net), a per-run self-contained HTML viewer, and an AST-based extractor of
+    the biblioshiny UI metadata straight from its source code. This is a
+    personal portfolio project: it is beta and intended to stay beta, it is
+    pinned to the package versions it was tested against, and it offers no
+    support and accepts no pull requests. See README, DISCLAIMER and NOTICE.
+    Built on, requiring, and interoperable with the GPL-3 'bibliometrix' package
+    and its 'biblioshiny' interface (Aria and Cuccurullo); attribution in NOTICE.
+License: GPL-3
+Encoding: UTF-8
+Language: en
+Depends:
+    R (>= 4.6.0),
+    bibliometrix
+Imports:
+    commonmark,
+    dplyr,
+    ggplot2,
+    htmlwidgets,
+    igraph,
+    jsonlite,
+    openxlsx,
+    plotly,
+    stats,
+    tools,
+    treemapify,
+    utils,
+    visNetwork
+Suggests:
+    ggwordcloud
+Roxygen: list(markdown = TRUE)
+NeedsCompilation: no
+URL: https://github.com/migueldiaz66/CorpusBiblioExtractor
+Config/roxygen2/version: 8.0.0
