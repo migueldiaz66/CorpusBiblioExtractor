@@ -19,6 +19,7 @@ docs/EXECUTION_PLAN.md
 docs/EXHAUSTIVE_ANALYSIS_PLAN.md
 docs/UI_METADATA_METHOD.md
 docs/PARITY_CHECK.md
+docs/ACID_TEST.md
 
 # --- renv: commit the lockfile, not the library ---
 renv/library/
