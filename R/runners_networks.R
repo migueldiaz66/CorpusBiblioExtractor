@@ -51,6 +51,33 @@
 #   countries    -> network="countries"    (needs AU_CO -> metaTagExtraction if missing)
 # ---------------------------------------------------------------------------
 
+# Load biblioshiny's OWN helper functions (igraph2vis, freqPlot, plot.ly, wordlist,
+# plotLifeCycle, ValueBoxes, lifeCycleSummaryUI, cssTags, to_title_case, ...) from the
+# INSTALLED bibliometrix, so the figures render with the exact biblioshiny code/style.
+# They live in the private env `.BSHINY`. In a PACKAGE the sourcing must happen at LOAD
+# time (runtime), NOT build time -> the empty env is created here and populated by
+# `.load_bshiny()` called from `.onLoad()` (see zzz.R). The env's parent is globalenv();
+# igraph2vis/freqPlot/plot.ly use bare %>%/mutate/ggplot/ggplotly, so dplyr, ggplot2 and
+# plotly are in DESCRIPTION `Depends` (attached to the search path when the package loads).
+.BSHINY <- new.env(parent = globalenv())
+.load_bshiny <- function() {
+  # utils.R: igraph2vis / plotLifeCycle / ValueBoxes / wordlist / freqPlot / plot.ly ...
+  # lifeCycleUI.R: lifeCycleSummaryUI (Life Cycle Summary cards).
+  # cssTags.R: cssTags() = el CSS global REAL de biblioshiny (del que toman clases las cards).
+  # biblioAI.R: to_title_case() (usada por authorCard / Author Profile).
+  # biblioShot.R: biblioShot() = screenshot plotly->PNG (colores solidos) que usan
+  #   plotlySankey2png / los snapshots de word_map (factorial) y map (thematic_evolution);
+  #   utils.R lo LLAMA pero no lo define -> hay que sourcearlo tambien.
+  for (fn in c("utils.R", "lifeCycleUI.R", "cssTags.R", "biblioAI.R", "biblioShot.R")) {
+    f <- file.path(system.file("biblioshiny", package = "bibliometrix"), fn)
+    if (nzchar(f) && file.exists(f)) try(sys.source(f, envir = .BSHINY), silent = TRUE)
+  }
+  # biblioShot() llama default_chromote_object() BARE (chromote); se inyecta en .BSHINY
+  # para que resuelva sin tener que attachar chromote a la search path.
+  if (requireNamespace("chromote", quietly = TRUE))
+    assign("default_chromote_object", chromote::default_chromote_object, envir = .BSHINY)
+}
+
 # networkPlot "Number of Nodes" cap (biblioshiny default-ish; per the task brief).
 .NET_N <- 50L
 
@@ -124,11 +151,52 @@
          .fig(.net_degree_plot(net), file = "degree_plot.png", id = "degree_plot")))
 }
 
+# --- biblioshiny-parity helpers (co-occurrence / collaboration) -------------
+# Resolve a UI default from params$ui (keyed by inputId) with a fallback.
+.uival <- function(ui, id, d) { v <- ui[[id]]; if (is.null(v)) d else v }
+# "Yes"/"yes" -> TRUE (biblioshiny stores toggles as Yes/No or yes/no strings).
+.yn    <- function(x) identical(as.character(x), "Yes") || identical(as.character(x), "yes")
+
+# Run networkPlot with resolved options (mirroring server.R) + render with
+# biblioshiny's own igraph2vis (fallback visIgraph); returns the 4 std assets.
+# `opt`: normalize, layout, cluster, repulsion(already /2), isolates, edges_min,
+# alpha, label_n, label_cex, labelsize, shape, edgesize, curved, shadow, noOverlap.
+# seed left at networkPlot default (123) for determinism (biblioshiny uses a
+# per-session seed for co-occurrence, so exact layout parity there is by-design
+# impossible; content/clusters still match). igraph2vis edgesize left at its
+# default 5 (server.R passes it only for co-occurrence, whose default is also 5).
+.net_render <- function(NetMatrix, opt) {
+  net <- bibliometrix::networkPlot(
+    NetMatrix, normalize = opt$normalize, Title = "", type = opt$layout,
+    size.cex = TRUE, size = 5, remove.multiple = FALSE, edgesize = opt$edgesize * 3,
+    labelsize = opt$labelsize, label.cex = opt$label_cex, curved = opt$curved,
+    label.n = opt$label_n, edges.min = opt$edges_min, label.color = FALSE,
+    remove.isolates = opt$isolates, alpha = opt$alpha, cluster = opt$cluster,
+    community.repulsion = opt$repulsion,
+    seed = if (is.null(opt$seed)) 123L else as.integer(opt$seed), verbose = FALSE)
+  ig2v <- tryCatch(get("igraph2vis", envir = .BSHINY), error = function(e) NULL)
+  vis  <- tryCatch(
+    if (is.function(ig2v))
+      ig2v(g = net$graph, curved = opt$curved, labelsize = opt$labelsize, opacity = opt$alpha,
+           type = opt$layout, shape = opt$shape, net = net, shadow = opt$shadow,
+           noOverlap = opt$noOverlap)$VIS
+    else visNetwork::visIgraph(net$graph),
+    error = function(e) visNetwork::visIgraph(net$graph))
+  list(
+    list(id = "network_html", type = "network_html", filename = "network.html", object = vis),
+    list(id = "network_net",  type = "network_net",  filename = "network.net",  object = net$graph),
+    .tbl(.net_node_table(net),  file = "table.xlsx",      id = "table"),
+    .fig(.net_degree_plot(net), file = "degree_plot.png", id = "degree_plot"))
+}
+
 # === Co-occurrence Network (4.1.1.1) ========================================
+# biblioshiny-faithful: applies Options defaults (params$ui, prefix `coc`/bare),
+# incl. Normalization (default "association"); renders via igraph2vis.
 register_runner("co_occurrence_network", function(M, params) {
   field  <- params$field
   ngrams <- if (!is.null(params$ngrams)) as.numeric(params$ngrams) else 1
-  nn     <- .net_n(params)
+  ui     <- if (is.null(params$ui)) list() else params$ui
+  nn     <- as.integer(.uival(ui, "Nodes", .net_n(params)))
   NetMatrix <- switch(field,
     ID        = .bn(M, "co-occurrences", "keywords",        nn),
     DE        = .bn(M, "co-occurrences", "author_keywords", nn),
@@ -144,10 +212,33 @@ register_runner("co_occurrence_network", function(M, params) {
                   Matrix::crossprod(WSC, WSC) },
     stop(sprintf("co_occurrence_network: unknown field code '%s'", field)))
 
-  .net_section_assets(.net_plot(NetMatrix))
+  norm <- .uival(ui, "normalize", "association"); if (identical(norm, "none")) norm <- NULL
+  .net_render(NetMatrix, list(
+    normalize = norm,
+    layout    = .uival(ui, "layout", "auto"),
+    cluster   = .uival(ui, "cocCluster", "louvain"),
+    repulsion = as.numeric(.uival(ui, "coc.repulsion", 0.5)) / 2,
+    isolates  = .yn(.uival(ui, "coc.isolates", "yes")),
+    edges_min = as.numeric(.uival(ui, "edges.min", 2)),
+    alpha     = as.numeric(.uival(ui, "cocAlpha", 0.7)),
+    label_n   = min(as.integer(.uival(ui, "Labels", 1000)), nn),
+    label_cex = .yn(.uival(ui, "label.cex", "Yes")),
+    labelsize = as.numeric(.uival(ui, "labelsize", 3)),
+    shape     = .uival(ui, "coc.shape", "dot"),
+    edgesize  = as.numeric(.uival(ui, "edgesize", 5)),
+    shadow    = .yn(.uival(ui, "coc.shadow", "Yes")),
+    curved    = .yn(.uival(ui, "coc.curved", "No")),
+    seed      = as.integer(.uival(ui, "random_seed", 1234)),  # biblioshiny co-occurrence networkPlot uses seed=random_seed (UI default 1234)
+    noOverlap = isTRUE(as.logical(.uival(ui, "noOverlap", TRUE)))))
 })
 
 # === Co-citation Network (4.2.1) ============================================
+# Faithful to biblioshiny server.R (co-citation block): applies the Options-panel
+# defaults (plan.json section$options -> params$ui, keyed by inputId) to
+# biblioNetwork + networkPlot, then renders with biblioshiny's own igraph2vis
+# (exact layout/style; falls back to visIgraph if unavailable). Non-Option server.R
+# constants (size=5, remove.multiple=FALSE, alpha=0.7, label.color=FALSE) and the
+# server.R transforms (Repulsion/2, Edge Size*3, "yes"->TRUE) are replicated.
 register_runner("co_citation_network", function(M, params) {
   network <- params$field                       # "references" | "authors" | "sources"
   if (network == "authors" && !("CR_AU" %in% names(M)))
@@ -155,11 +246,63 @@ register_runner("co_citation_network", function(M, params) {
   if (network == "sources" && !("CR_SO" %in% names(M)))
     M <- bibliometrix::metaTagExtraction(M, Field = "CR_SO", sep = ";")
 
-  NetMatrix <- .bn(M, "co-citation", network, .net_n(params))
-  .net_section_assets(.net_plot(NetMatrix))
+  ui  <- if (is.null(params$ui)) list() else params$ui
+  val <- function(id, d) { v <- ui[[id]]; if (is.null(v)) d else v }
+
+  n           <- as.integer(val("citNodes", .net_n(params)))
+  label.n     <- as.integer(val("citLabels", 1000)); if (label.n > n) label.n <- n
+  cit_sep     <- val("citSep", ";")
+  shortlabel  <- identical(val("citShortlabel", "Yes"), "Yes")
+  cit_layout  <- val("citlayout", "auto")
+  cit_curved  <- identical(val("cocit.curved", "No"), "Yes")
+  cit_labelsz <- as.numeric(val("citlabelsize", 2))
+  cit_shape   <- val("cocit.shape", "dot")
+  cit_shadow  <- identical(val("cocit.shadow", "Yes"), "Yes")
+  cit_noover  <- isTRUE(as.logical(val("citNoOverlap", TRUE)))
+  cit_labcex  <- identical(val("citlabel.cex", "Yes"), "Yes")
+  cit_edgemin <- as.numeric(val("citedges.min", 2))
+  cit_isol    <- identical(val("cit.isolates", "yes"), "yes")
+  cit_edgesz  <- as.numeric(val("citedgesize", 2))
+  cit_cluster <- val("cocitCluster", "louvain")
+  cit_repul   <- as.numeric(val("cocit.repulsion", 0.5)) / 2        # server.R: /2
+
+  NetRefs <- if (identical(network, "references"))
+    bibliometrix::biblioNetwork(M, analysis = "co-citation", network = "references",
+                                n = n, sep = cit_sep, shortlabel = shortlabel)
+  else
+    bibliometrix::biblioNetwork(M, analysis = "co-citation", network = network,
+                                n = n, sep = cit_sep)
+
+  net <- bibliometrix::networkPlot(
+    NetRefs, normalize = NULL, Title = "", type = cit_layout,
+    size.cex = TRUE, size = 5, remove.multiple = FALSE, edgesize = cit_edgesz * 3,  # server.R: *3
+    labelsize = cit_labelsz, label.cex = cit_labcex, curved = cit_curved,
+    label.n = label.n, edges.min = cit_edgemin, label.color = FALSE,
+    remove.isolates = cit_isol, alpha = 0.7, cluster = cit_cluster,
+    community.repulsion = cit_repul, verbose = FALSE)
+
+  # Render with biblioshiny's own igraph2vis for exact parity; fallback to visIgraph.
+  ig2v <- tryCatch(get("igraph2vis", envir = .BSHINY), error = function(e) NULL)
+  vis  <- tryCatch(
+    if (is.function(ig2v))
+      ig2v(g = net$graph, curved = cit_curved, labelsize = cit_labelsz, opacity = 0.7,
+           type = cit_layout, shape = cit_shape, net = net, shadow = cit_shadow,
+           noOverlap = cit_noover)$VIS      # igraph2vis returns list(VIS=<widget>, ...)
+    else visNetwork::visIgraph(net$graph),
+    error = function(e) visNetwork::visIgraph(net$graph))
+
+  list(
+    list(id = "network_html", type = "network_html", filename = "network.html", object = vis),
+    list(id = "network_net",  type = "network_net",  filename = "network.net",  object = net$graph),
+    .tbl(.net_node_table(net),  file = "table.xlsx",      id = "table"),
+    .fig(.net_degree_plot(net), file = "degree_plot.png", id = "degree_plot"))
 })
 
 # === Collaboration Network (4.3.1) ==========================================
+# biblioshiny-faithful: applies Options defaults (params$ui, prefix `col`; note
+# Edit Nodes inputId is `soc.curved`, and edges.min default is 1); Normalization
+# default "association"; optional filter of articles with >20 authors (default
+# off); renders via igraph2vis.
 register_runner("collaboration_network", function(M, params) {
   network <- params$field                       # "authors" | "universities" | "countries"
   if (network == "universities" && !("AU_UN" %in% names(M)))
@@ -167,6 +310,28 @@ register_runner("collaboration_network", function(M, params) {
   if (network == "countries" && !("AU_CO" %in% names(M)))
     M <- bibliometrix::metaTagExtraction(M, Field = "AU_CO", sep = ";")
 
-  NetMatrix <- .bn(M, "collaboration", network, .net_n(params))
-  .net_section_assets(.net_plot(NetMatrix))
+  ui <- if (is.null(params$ui)) list() else params$ui
+  if (identical(network, "authors") &&
+      isTRUE(as.logical(.uival(ui, "col.filterMaxAuthors", FALSE))) && "nAU" %in% names(M))
+    M <- M[M$nAU <= 20, , drop = FALSE]
+  nn <- as.integer(.uival(ui, "colNodes", .net_n(params)))
+  NetMatrix <- .bn(M, "collaboration", network, nn)
+
+  norm <- .uival(ui, "colnormalize", "association"); if (identical(norm, "none")) norm <- NULL
+  .net_render(NetMatrix, list(
+    normalize = norm,
+    layout    = .uival(ui, "collayout", "auto"),
+    cluster   = .uival(ui, "colCluster", "louvain"),
+    repulsion = as.numeric(.uival(ui, "col.repulsion", 0.5)) / 2,
+    isolates  = .yn(.uival(ui, "col.isolates", "yes")),
+    edges_min = as.numeric(.uival(ui, "coledges.min", 1)),
+    alpha     = as.numeric(.uival(ui, "colAlpha", 0.7)),
+    label_n   = min(as.integer(.uival(ui, "colLabels", 1000)), nn),
+    label_cex = .yn(.uival(ui, "collabel.cex", "Yes")),
+    labelsize = as.numeric(.uival(ui, "collabelsize", 2)),
+    shape     = .uival(ui, "col.shape", "dot"),
+    edgesize  = as.numeric(.uival(ui, "coledgesize", 5)),
+    shadow    = .yn(.uival(ui, "col.shadow", "Yes")),
+    curved    = .yn(.uival(ui, "soc.curved", "No")),
+    noOverlap = isTRUE(as.logical(.uival(ui, "colNoOverlap", TRUE)))))
 })

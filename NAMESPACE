@@ -7,12 +7,23 @@ export(cbe_extract_ui)
 export(cbe_verify_parity)
 export(cbe_check_versions)
 
-# bibliometrix is also in Depends (attached) — it is needed *attached* so that
-# convert2df()'s internal data("bibtag") resolves; importing it here additionally
-# satisfies the namespace when loaded-but-not-attached.
+# bibliometrix is also in Depends (attached) so that convert2df()'s internal
+# data("bibtag") resolves; importing it here additionally satisfies the namespace
+# when loaded-but-not-attached. dplyr/ggplot2/plotly/shiny/tidyr/visNetwork are
+# likewise in Depends (their functions are used bare by the reused biblioshiny
+# helpers in .BSHINY -- e.g. lifeCycleSummaryUI() calls tagList() bare, dend2vis()
+# calls visHclust()/visGroups() bare); one importFrom each keeps R CMD check happy
+# for the loaded-not-attached case.
 import(bibliometrix)
-# These are used only inside the anonymous runner functions registered at load,
-# which the static check does not see; declare them explicitly.
+# Used inside the anonymous runner functions registered at load, or via the reused
+# biblioshiny helpers, which the static check does not see; declare them explicitly.
 importFrom(dplyr, group_by)
+importFrom(ggplot2, ggplot)
 importFrom(plotly, plot_ly)
+importFrom(shiny, fluidPage)
+importFrom(shiny, tagList)
+importFrom(tidyr, drop_na)
 importFrom(treemapify, geom_treemap)
+importFrom(visNetwork, visHclust)
+importFrom(utils, getFromNamespace)
+importFrom(wordcloud2, wordcloud2)

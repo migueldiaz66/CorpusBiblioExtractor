@@ -45,6 +45,16 @@ build_run_index <- function(run_dir, run_ts, base = system.file("scaffold", pack
   leaf_dirs <- dirname(all_dirs[basename(all_dirs) == "metadata_ui"])
   scaffold  <- stats::setNames(leaf_dirs, basename(leaf_dirs))
 
+  # Per-section explanatory notes shown at the top of the Results tab (HTML).
+  SECTION_NOTES <- list(
+    "3.3.1.1_author_profile" = paste0(
+      "\U0001F4A1 Esta seccion se genera para los <strong>10 autores mas relevantes</strong> del corpus ",
+      "(ranking por apariciones). Cada perfil se entrega como <strong>PNG</strong> (imagen estatica, sin ligas) ",
+      "y como <strong>SVG</strong>: el archivo <code>.svg</code> esta <strong>hipervinculado</strong> - ",
+      "la <em>afiliacion</em> (&rarr; <code>ror.org</code>), <em>ORCID Profile</em>, <em>OpenAlex Profile</em> ",
+      "y cada <em>research topic</em> apuntan a sus paginas correspondientes. Abrelo en el navegador para usar las ligas.")
+  )
+
   # Results HTML for one section: assets grouped by combination, paths RELATIVE
   # to the run dir (<id>/<combo>/<file>).
   results_html <- function(id) {
@@ -59,21 +69,27 @@ build_run_index <- function(run_dir, run_ts, base = system.file("scaffold", pack
         rel <- paste0(id, "/", cb, "/", f)
         ext <- tolower(tools::file_ext(f))
         if (ext == "png")
-          items <- c(items, sprintf('<figure class="asset"><img loading="lazy" src="%s" alt="%s"><figcaption>%s</figcaption></figure>', rel, esc(f), esc(f)))
+          # click-to-enlarge: thumbnail opens the full PNG in the lightbox
+          items <- c(items, sprintf('<figure class="asset"><img loading="lazy" class="thumb" src="%s" alt="%s" onclick="lbImg(this)"><figcaption>%s</figcaption></figure>', rel, esc(f), esc(f)))
+        else if (ext == "html")
+          # live widget: main click opens it BIG in the lightbox iframe (HD+); the
+          # small arrow opens it in a new browser tab.
+          items <- c(items, sprintf('<span class="live-wrap"><a class="asset file livelink" data-src="%s" href="%s" onclick="lbFrame(this);return false;">&#127760;&nbsp;%s</a><a class="newtab" href="%s" target="_blank" title="Abrir en pesta&ntilde;a nueva">&#8599;</a></span>', rel, rel, esc(f), rel))
         else {
-          ico <- switch(ext, html = "&#127760;", xlsx = "&#128202;", csv = "&#128202;", net = "&#128376;", "&#128196;")
+          ico <- switch(ext, xlsx = "&#128202;", csv = "&#128202;", net = "&#128376;", "&#128196;")
           items <- c(items, sprintf('<a class="asset file" href="%s" target="_blank">%s&nbsp;%s</a>', rel, ico, esc(f)))
         }
       }
       blocks <- c(blocks, sprintf('<div class="combo"><h4>%s</h4><div class="assets">%s</div></div>', esc(cb), paste(items, collapse = "\n")))
     }
     if (!length(blocks)) return(NULL)
-    paste(blocks, collapse = "\n")
+    note <- if (id %in% names(SECTION_NOTES)) sprintf('<div class="section-note">%s</div>', SECTION_NOTES[[id]]) else ""
+    paste0(note, paste(blocks, collapse = "\n"))
   }
 
   GROUPS <- c("1_search", "2_appraisal", "3_analysis", "4_synthesis")
-  GLAB   <- c("1_search" = "1 | Search", "2_appraisal" = "2 | Appraisal",
-              "3_analysis" = "3 | Analysis", "4_synthesis" = "4 | Synthesis")
+  GLAB   <- c("1_search" = "1 - Search", "2_appraisal" = "2 - Appraisal",
+              "3_analysis" = "3 - Analysis", "4_synthesis" = "4 - Synthesis")
 
   n_scen <- 0L
   records <- list()
@@ -93,15 +109,25 @@ build_run_index <- function(run_dir, run_ts, base = system.file("scaffold", pack
     mop <- file.path(sd, "metadata_ui", "options", "options.md")
     mtb <- file.path(sd, "metadata_ui", "tabs", "tabs.md")
     tabs <- list()
+    if (!is.null(rh)) tabs[[length(tabs) + 1L]] <- list(name = "Results", html = rh)   # Results FIRST (default tab)
     if (file.exists(mfo)) tabs[[length(tabs) + 1L]] <- list(name = "Info &amp; References", html = md2html(mfo))
     tabs[[length(tabs) + 1L]] <- list(name = "Options", html = md2html(mop))
     tabs[[length(tabs) + 1L]] <- list(name = "Tabs",    html = md2html(mtb))
-    if (!is.null(rh)) tabs[[length(tabs) + 1L]] <- list(name = "Results", html = rh)
     records[[length(records) + 1L]] <- list(group = group, id = id, num = h$num, title = h$title,
                                             key = sortkey(h$num), path = relp, tabs = tabs)
   }
   gord <- match(vapply(records, `[[`, "", "group"), GROUPS); gord[is.na(gord)] <- 99L
   records <- records[order(gord, vapply(records, `[[`, "", "key"))]
+
+  # Drop whole top-level groups from the viewer: 1_search (import/filters) and
+  # 2_appraisal (PRISMA) are setup steps, not results figures. Robust: drop by group
+  # AND by section-number prefix (1.x / 2.x), so a section whose scaffold dir was not
+  # matched (and thus fell back to the 4_synthesis group) is still removed.
+  DROP_GROUPS <- c("1_search", "2_appraisal")
+  records <- Filter(function(r) !(r$group %in% DROP_GROUPS) && !grepl("^[12]\\.", r$id), records)
+  if (!length(records)) { message("[index] no sections left after group filter in ", run_dir); return(invisible(NULL)) }
+  n_scen  <- sum(vapply(records, function(r)
+    length(list.dirs(file.path(run_dir, r$id), recursive = FALSE, full.names = FALSE)), integer(1)))
 
   # --- run header info --------------------------------------------------------
   ndocs <- timespan <- nsrc <- NA
@@ -110,7 +136,7 @@ build_run_index <- function(run_dir, run_ts, base = system.file("scaffold", pack
     info <- tryCatch(jsonlite::read_json(ci), error = function(e) NULL)
     if (!is.null(info)) { ndocs <- info$n_documents; timespan <- info$timespan; nsrc <- info$sources }
   }
-  corpus_line <- if (!is.na(ndocs)) sprintf("%s docs | %s | %s fuentes", ndocs, timespan, nsrc) else "corpus n/d"
+  corpus_line <- if (!is.na(ndocs)) sprintf("%s docs - %s - %s fuentes", ndocs, timespan, nsrc) else "corpus n/d"
 
   # --- assemble nav + panels --------------------------------------------------
   nav <- character(0); pan <- character(0); last_group <- ""
@@ -182,6 +208,21 @@ body{margin:0;font:15px/1.55 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-
 figure.asset{margin:0}figure.asset figcaption{font:11px ui-monospace,Menlo,Consolas,monospace;color:var(--muted);max-width:340px;word-break:break-all;margin-top:4px}
 a.asset.file{display:inline-block;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;font:12px ui-monospace,Menlo,Consolas,monospace;text-decoration:none;color:var(--brand2);word-break:break-all;max-width:360px}
 a.asset.file:hover{border-color:var(--brand);background:#f0f4ff}
+.section-note{background:#f0f7ff;border-left:4px solid var(--brand);border-radius:8px;padding:12px 16px;margin:0 0 20px;font-size:13.5px;line-height:1.5;color:#334}
+.section-note code{background:#e3edfb}
+.asset img.thumb{cursor:zoom-in;transition:box-shadow .12s,border-color .12s}
+.asset img.thumb:hover{border-color:var(--brand);box-shadow:0 3px 14px rgba(37,99,235,.30)}
+.live-wrap{display:inline-flex;align-items:stretch;gap:4px}
+.livelink{cursor:zoom-in}
+.newtab{display:inline-flex;align-items:center;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--brand2);text-decoration:none;font-size:14px;line-height:1}
+.newtab:hover{border-color:var(--brand);background:#f0f4ff}
+#lb{position:fixed;inset:0;background:rgba(15,23,42,.92);display:none;align-items:center;justify-content:center;z-index:1000}
+#lb.open{display:flex}
+#lb img{max-width:96vw;max-height:92vh;background:#fff;border-radius:8px;box-shadow:0 12px 48px rgba(0,0,0,.55)}
+#lb iframe{width:94vw;height:92vh;border:0;background:#fff;border-radius:8px;box-shadow:0 12px 48px rgba(0,0,0,.55)}
+#lb .lb-bar{position:absolute;top:14px;left:22px;color:#cbd5e1;font:12px ui-monospace,Menlo,Consolas,monospace;max-width:70vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#lb .lb-close{position:absolute;top:6px;right:22px;color:#fff;font-size:36px;line-height:1;cursor:pointer;font-family:Arial,sans-serif;user-select:none}
+#lb .lb-close:hover{color:#93c5fd}
 '
 
   js <- "
@@ -204,6 +245,18 @@ function filterNav(q){
   document.querySelectorAll('.nav-item').forEach(function(n){ n.style.display = n.dataset.name.indexOf(q)>=0 ? '' : 'none'; });
 }
 window.addEventListener('DOMContentLoaded',function(){ var h=parseInt(location.hash.replace('#','')); selSec(isNaN(h)?0:h); });
+function lbImg(el){ lbOpen('img', el.src); }
+function lbFrame(el){ lbOpen('frame', el.dataset.src); }
+function lbOpen(kind, src){
+  var lb=document.getElementById('lb'), img=document.getElementById('lb-img'), fr=document.getElementById('lb-frame'), bar=document.getElementById('lb-bar');
+  if(kind==='img'){ img.src=src; img.style.display='block'; fr.style.display='none'; fr.src='about:blank'; }
+  else { fr.src=src; fr.style.display='block'; img.style.display='none'; img.src=''; }
+  try{ bar.textContent = decodeURIComponent(src.split('/').pop()); }catch(e){ bar.textContent=''; }
+  lb.classList.add('open');
+}
+function lbHide(){ var lb=document.getElementById('lb'); lb.classList.remove('open'); document.getElementById('lb-frame').src='about:blank'; document.getElementById('lb-img').src=''; }
+function lbBackdrop(e){ if(e.target.id==='lb') lbHide(); }
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') lbHide(); });
 "
 
   html <- paste0(
@@ -213,13 +266,17 @@ window.addEventListener('DOMContentLoaded',function(){ var h=parseInt(location.h
     '<div class="app"><aside class="side">',
     '<h1>Resultados del run</h1>',
     '<div class="sub"><code>', esc(run_ts), '</code></div>',
-    '<div class="sub">', length(records), ' secciones | ', n_scen, ' escenarios</div>',
+    '<div class="sub">', length(records), ' secciones - ', n_scen, ' escenarios</div>',
     '<div class="sub">', esc(corpus_line), '</div>',
     '<input class="search" placeholder="Filtrar secciones&hellip;" oninput="filterNav(this.value)">',
     paste(nav, collapse = "\n"),
     '</aside><main class="main">',
     paste(pan, collapse = "\n"),
-    '</main></div><script>', js, '</script></body></html>')
+    '</main></div>',
+    '<div id="lb" onclick="lbBackdrop(event)"><div class="lb-bar" id="lb-bar"></div>',
+    '<span class="lb-close" onclick="lbHide()" title="Cerrar (Esc)">&times;</span>',
+    '<img id="lb-img" alt=""><iframe id="lb-frame" src="about:blank"></iframe></div>',
+    '<script>', js, '</script></body></html>')
 
   out <- file.path(run_dir, "index.html")
   con <- file(out, "w", encoding = "UTF-8"); writeLines(html, con); close(con)
@@ -236,4 +293,3 @@ window.addEventListener('DOMContentLoaded',function(){ var h=parseInt(location.h
 #' @return (invisibly) the path to the written `index.html`.
 #' @export
 cbe_build_index <- function(run_dir) build_run_index(run_dir, basename(run_dir))
-

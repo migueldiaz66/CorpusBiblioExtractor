@@ -1,6 +1,6 @@
 Package: CorpusBiblioExtractor
 Title: Exhaustive Biblioshiny Sweeps and UI-Metadata Extraction from a Bibliographic Corpus
-Version: 0.1.0
+Version: 0.2.0
 Authors@R:
     person("Miguel Jesus", "Diaz Macedo", email = "miguel.diazmacedo@gmail.com",
            role = c("aut", "cre"))
@@ -20,23 +20,32 @@ Encoding: UTF-8
 Language: en
 Depends:
     R (>= 4.6.0),
-    bibliometrix
-Imports:
-    commonmark,
+    bibliometrix,
     dplyr,
     ggplot2,
+    plotly,
+    shiny,
+    tidyr,
+    visNetwork
+Imports:
+    base64enc,
+    chromote,
+    commonmark,
+    grid,
+    htmltools,
     htmlwidgets,
     igraph,
     jsonlite,
     openxlsx,
-    plotly,
+    ragg,
     stats,
     tools,
     treemapify,
     utils,
-    visNetwork
+    webshot2,
+    wordcloud2
 Suggests:
-    ggwordcloud
+    rmarkdown
 Roxygen: list(markdown = TRUE)
 NeedsCompilation: no
 URL: https://github.com/migueldiaz66/CorpusBiblioExtractor

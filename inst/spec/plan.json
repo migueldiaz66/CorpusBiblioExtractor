@@ -16,28 +16,28 @@
       "assets":[{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.1.1_main_information","tabName":"mainInfo","runner":"main_information","params":[],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"card_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.1.2_annual_scientific_production","tabName":"annualScPr","runner":"annual_scientific_production","params":[],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.1.3_average_citations_per_year","tabName":"averageCitPerYear","runner":"average_citations_per_year","params":[],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.1.4_life_cycle","tabName":"lifeCycle","runner":"life_cycle","params":[],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot_annual","type":"plot_html","filename":"plot_annual.html"},{"id":"plot_cumulative","type":"plot_html","filename":"plot_cumulative.html"},{"id":"summary","type":"html_doc","filename":"summary.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.1.5_three_field_plot","tabName":"threeFieldPlot","runner":"three_field_plot","params":[],
-      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"}] },
+      "assets":[{"id":"plot","type":"sankey_png","filename":"plot.png"},{"id":"plot_live","type":"plot_html","filename":"plot.html"}] },
 
     { "id":"3.2.1_most_relevant_sources","tabName":"relevantSources","runner":"most_relevant_sources","params":[],
       "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.2.2_most_local_cited_sources","tabName":"localCitedSources","runner":"most_local_cited_sources","params":[],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"plot_bar","type":"figure_png","filename":"plot_bar.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.2.3_bradford_law","tabName":"bradford","runner":"bradford","params":[],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"summary","type":"html_doc","filename":"summary.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.2.4_sources_local_impact","tabName":"sourceImpact","runner":"sources_local_impact",
       "params":[{"key":"impact_measure","values":[{"name":"h_index","code":"h_index"},{"name":"g_index","code":"g_index"},{"name":"m_index","code":"m_index"},{"name":"total_citation","code":"total_citation"}]}],
@@ -45,47 +45,47 @@
 
     { "id":"3.2.5_sources_production_over_time","tabName":"sourceDynamics","runner":"sources_production_over_time",
       "params":[{"key":"occurrences","values":[{"name":"cumulate","code":"cumulate"},{"name":"per_year","code":"per_year"}]}],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.3.1.1_author_profile","tabName":"AuthorPage","runner":"author_profile","params":[],
       "assets":[{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.3.1.2_most_relevant_authors","tabName":"mostRelAuthors","runner":"most_relevant_authors",
       "params":[{"key":"measure","values":[{"name":"n_of_documents","code":"documents"},{"name":"n_of_documents_percent","code":"documents_percent"},{"name":"n_of_documents_fractionalized","code":"fractionalized"}]}],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"plot_bar","type":"figure_png","filename":"plot_bar.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.3.1.3_most_local_cited_authors","tabName":"mostLocalCitedAuthors","runner":"most_local_cited_authors","params":[],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"plot_bar","type":"figure_png","filename":"plot_bar.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.3.1.4_authors_production_over_time","tabName":"authorsProdOverTime","runner":"authors_production_over_time","params":[],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"},{"id":"table_papers","type":"table_xlsx","filename":"table_papers.xlsx"}] },
 
     { "id":"3.3.1.5_lotka_law","tabName":"lotka","runner":"lotka_law","params":[],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"summary","type":"html_doc","filename":"summary.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.3.1.6_authors_local_impact","tabName":"authorImpact","runner":"authors_local_impact",
       "params":[{"key":"measure","values":[{"name":"h_index","code":"h_index"},{"name":"g_index","code":"g_index"},{"name":"m_index","code":"m_index"},{"name":"total_citation","code":"total_citation"}]}],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"plot_bar","type":"figure_png","filename":"plot_bar.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.3.2.1_most_relevant_affiliations","tabName":"mostRelAffiliations","runner":"most_relevant_affiliations",
       "params":[{"key":"disambiguation","values":[{"name":"yes","code":"yes"},{"name":"no","code":"no"}]}],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"plot_bar","type":"figure_png","filename":"plot_bar.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.3.2.2_affiliations_production_over_time","tabName":"AffOverTime","runner":"affiliations_production_over_time","params":[],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.3.3.1_corresponding_author_countries","tabName":"correspAuthorCountry","runner":"corresponding_author_countries","params":[],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.3.3.2_countries_scientific_production","tabName":"countryScientProd","runner":"countries_scientific_production","params":[],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.3.3.3_countries_production_over_time","tabName":"COOverTime","runner":"countries_production_over_time","params":[],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.3.3.4_most_cited_countries","tabName":"mostCitedCountries","runner":"most_cited_countries",
       "params":[{"key":"measure","values":[{"name":"total_citations","code":"total_citations"},{"name":"average_article_citations","code":"average_article_citations"}]}],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"plot_bar","type":"figure_png","filename":"plot_bar.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.4.1.1_most_global_cited_documents","tabName":"mostGlobalCitDoc","runner":"most_global_cited_documents",
       "params":[{"key":"measure","values":[{"name":"total_citations","code":"total_citations"},{"name":"total_citations_per_year","code":"total_citations_per_year"}]}],
@@ -99,9 +99,14 @@
 
     { "id":"3.4.2.2_references_spectroscopy","tabName":"ReferenceSpect","runner":"references_spectroscopy",
       "params":[{"key":"median_window","values":[{"name":"centered","code":"centered"},{"name":"backward","code":"backward"}]}],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"},{"id":"table_cited_references","type":"table_xlsx","filename":"table_cited_references.xlsx"},{"id":"table_influential_references","type":"table_xlsx","filename":"table_influential_references.xlsx"},{"id":"table_top10_peaks","type":"table_xlsx","filename":"table_top10_peaks.xlsx"}] },
 
     { "id":"3.4.3.1_most_frequent_words","tabName":"mostFreqWords","runner":"most_frequent_words",
+      "options":{
+        "main_configuration":{
+          "number_of_words":{"inputId":"MostRelWordsN","label":"Number of Words","default":10,"line":5746}
+        }
+      },
       "params":[
         {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"},{"name":"subject_categories","code":"WC"}]},
         {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
@@ -109,20 +114,36 @@
       "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.4.3.2_wordcloud","tabName":"wcloud","runner":"wordcloud",
+      "options":{
+        "main_configuration":{
+          "number_of_words":{"inputId":"n_words","label":"Number of Words","default":50,"line":6013}
+        }
+      },
       "params":[
         {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"},{"name":"subject_categories","code":"WC"}]},
         {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
       ],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.4.3.3_treemap","tabName":"treemap","runner":"treemap",
+      "options":{
+        "main_configuration":{
+          "number_of_words":{"inputId":"treen_words","label":"Number of Words","default":50,"line":6429}
+        }
+      },
       "params":[
         {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"},{"name":"subject_categories","code":"WC"}]},
         {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
       ],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.4.3.4_words_frequency_over_time","tabName":"wordDynamics","runner":"words_frequency_over_time",
+      "options":{
+        "parameters":{
+          "occurrences":{"inputId":"cumTerms","label":"Occurrences (Cumulate/Per year)","default":"Cum","line":6820},
+          "number_of_words":{"inputId":"topkw","label":"Number of Words (range)","default":[1,10],"line":6831}
+        }
+      },
       "params":[
         {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"}]},
         {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
@@ -130,13 +151,59 @@
       "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"3.4.3.5_trend_topics","tabName":"trendTopic","runner":"trend_topics",
+      "options":{
+        "text_editing":{
+          "stop_words":{"inputId":"TTStopFile","label":"Load a list of terms to remove","default":"N","line":7028},
+          "synonyms":{"inputId":"TTSynFile","label":"Load a list of synonyms","default":"N","line":7078}
+        },
+        "parameters":{
+          "word_minimum_frequency":{"inputId":"trendMinFreq","label":"Word Minimum Frequency","default":5,"line":7144},
+          "number_of_words_per_year":{"inputId":"trendNItems","label":"Number of Words per Year","default":3,"line":7159}
+        }
+      },
       "params":[
         {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"}]},
         {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
       ],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"4.1.1.1_co_occurrence_network","tabName":"coOccurenceNetwork","runner":"co_occurrence_network","compute":{"n":50},
+      "options":{
+        "method_parameters":{
+          "network_layout":{"inputId":"layout","label":"Network Layout","default":"auto","line":7719},
+          "clustering_algorithm":{"inputId":"cocCluster","label":"Clustering Algorithm","default":"louvain","line":7739},
+          "normalization_method":{"inputId":"normalize","label":"Normalization Method","default":"association","line":7762},
+          "node_color_by_year":{"inputId":"cocyears","label":"Node Color by Year","default":"No","line":7781},
+          "network_size":{
+            "number_of_nodes":{"inputId":"Nodes","label":"Number of Nodes","default":50,"line":7802},
+            "repulsion_force":{"inputId":"coc.repulsion","label":"Repulsion Force","default":0.5,"line":7816}
+          },
+          "filtering_options":{
+            "remove_isolated_nodes":{"inputId":"coc.isolates","label":"Remove Isolated Nodes","default":"yes","line":7840},
+            "minimum_number_of_edges":{"inputId":"edges.min","label":"Minimum Number of Edges","default":2,"line":7852}
+          }
+        },
+        "graphical_parameters":{
+          "visual_appearance":{
+            "opacity":{"inputId":"cocAlpha","label":"Opacity","default":0.7,"line":7888},
+            "number_of_labels":{"inputId":"Labels","label":"Number of Labels","default":1000,"line":7902}
+          },
+          "label_settings":{
+            "label_scaling_cex":{"inputId":"label.cex","label":"Label Scaling (cex)","default":"Yes","line":7925},
+            "label_size":{"inputId":"labelsize","label":"Label Size","default":3,"line":7937}
+          },
+          "node_edge_settings":{
+            "node_shape":{"inputId":"coc.shape","label":"Node Shape","default":"dot","line":7960},
+            "edge_size":{"inputId":"edgesize","label":"Edge Size","default":5,"line":7979},
+            "node_shadow":{"inputId":"coc.shadow","label":"Node Shadow","default":"Yes","line":7995},
+            "edit_nodes":{"inputId":"coc.curved","label":"Edit Nodes","default":"No","line":8007}
+          }
+        },
+        "main_config_extra":{
+          "avoid_label_overlap":{"inputId":"noOverlap","label":"Avoid Label Overlap","default":true,"line":7579},
+          "random_seed":{"inputId":"random_seed","label":"Random seed (global; networkPlot seed)","default":1234,"line":14470}
+        }
+      },
       "params":[
         {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"},{"name":"subject_categories","code":"WC"}]},
         {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
@@ -144,6 +211,29 @@
       "assets":[{"id":"network_html","type":"network_html","filename":"network.html"},{"id":"network_net","type":"network_net","filename":"network.net"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"},{"id":"degree_plot","type":"figure_png","filename":"degree_plot.png"}] },
 
     { "id":"4.1.1.2_thematic_map","tabName":"thematicMap","runner":"thematic_map",
+      "options":{
+        "main_config_extra":{
+          "avoid_label_overlap":{"inputId":"noOverlapTM","label":"Avoid Label Overlap","default":true,"line":8281}
+        },
+        "parameters":{
+          "data_parameters":{
+            "number_of_words":{"inputId":"TMn","label":"Number of Words","default":250,"line":8427},
+            "min_cluster_frequency":{"inputId":"TMfreq","label":"Min Cluster Frequency (per thousand docs)","default":5,"line":8441},
+            "alpha_parameter":{"inputId":"TMalpha","label":"Alpha (Occurrence vs Centrality)","default":0.5,"line":8455}
+          },
+          "display_parameters":{
+            "number_of_labels":{"inputId":"TMn.labels","label":"Number of Labels","default":3,"line":8477},
+            "label_size":{"inputId":"sizeTM","label":"Label Size","default":0.3,"line":8491}
+          },
+          "network_parameters":{
+            "community_repulsion":{"inputId":"TMrepulsion","label":"Community Repulsion","default":0.5,"line":8514},
+            "clustering_algorithm":{"inputId":"TMCluster","label":"Clustering Algorithm","default":"louvain","line":8528}
+          }
+        },
+        "seed":{
+          "random_seed":{"inputId":"random_seed","label":"Random seed (global; thematicMap seed)","default":1234,"line":11467}
+        }
+      },
       "params":[
         {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"}]},
         {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]},
@@ -152,32 +242,135 @@
       "assets":[{"id":"map","type":"figure_png","filename":"map.png"},{"id":"network_html","type":"network_html","filename":"network.html"},{"id":"network_net","type":"network_net","filename":"network.net"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"},{"id":"clusters","type":"table_xlsx","filename":"clusters.xlsx"}] },
 
     { "id":"4.1.1.3_thematic_evolution","tabName":"thematicEvolution","runner":"thematic_evolution",
+      "options":{
+        "main_config_extra":{
+          "avoid_label_overlap":{"inputId":"noOverlapTE","label":"Avoid Label Overlap","default":true,"line":8708}
+        },
+        "parameters":{
+          "data_parameters":{
+            "number_of_words":{"inputId":"nTE","label":"Number of Words","default":250,"line":8854},
+            "min_cluster_frequency":{"inputId":"fTE","label":"Min Cluster Frequency (per thousand docs)","default":5,"line":8868}
+          },
+          "weight_parameters":{
+            "alpha_parameter":{"inputId":"TEalpha","label":"Alpha (Occurrence vs Centrality)","default":0.5,"line":8891},
+            "min_weight_index":{"inputId":"minFlowTE","label":"Min Weight Index","default":0.1,"line":8905}
+          },
+          "display_parameters":{
+            "label_size":{"inputId":"sizeTE","label":"Label Size","default":0.3,"line":8928},
+            "number_of_labels":{"inputId":"TEn.labels","label":"Number of Labels","default":3,"line":8942}
+          },
+          "clustering_algorithm":{"inputId":"TECluster","label":"Clustering Algorithm","default":"louvain","line":8956}
+        },
+        "seed":{
+          "random_seed":{"inputId":"random_seed","label":"Random seed (global; thematicEvolution seed)","default":1234,"line":11467}
+        }
+      },
       "params":[
         {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"}]},
         {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
       ],
-      "assets":[{"id":"map","type":"plot_html","filename":"map.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+      "assets":[{"id":"map","type":"sankey_png","filename":"map.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
-    { "id":"4.1.2.1_factorial_analysis","tabName":"factorialAnalysis","runner":"factorial_analysis","compute":{"max_terms":50},
+    { "id":"4.1.2.1_factorial_analysis","tabName":"factorialAnalysis","runner":"factorial_analysis",
+      "options":{
+        "method_parameters":{
+          "number_of_terms":{"inputId":"CSn","label":"Number of Terms","default":50,"line":9478},
+          "number_of_clusters":{"inputId":"nClustersCS","label":"N. of Clusters","default":"1","line":9490}
+        },
+        "graphical_parameters":{
+          "label_size":{"inputId":"CSlabelsize","label":"Label Size","default":10,"line":9530},
+          "number_of_documents":{"inputId":"CSdoc","label":"Num. of Documents","default":5,"line":9543}
+        }
+      },
       "params":[
         {"key":"method","values":[{"name":"correspondence_analysis","code":"CA"},{"name":"multiple_correspondence_analysis","code":"MCA"},{"name":"multidimensional_scaling","code":"MDS"}]},
         {"key":"field","values":[{"name":"keywords_plus","code":"ID"},{"name":"authors_keywords","code":"DE"},{"name":"all_keywords","code":"KW_Merged"},{"name":"titles","code":"TI"},{"name":"abstracts","code":"AB"}]},
         {"key":"ngrams","applies_when":{"param":"field","in":["titles","abstracts"]},"values":[{"name":"unigrams","code":1},{"name":"bigrams","code":2},{"name":"trigrams","code":3}]}
       ],
-      "assets":[{"id":"word_map","type":"figure_png","filename":"word_map.png"},{"id":"words_by_cluster","type":"table_xlsx","filename":"words_by_cluster.xlsx"},{"id":"articles_by_cluster","type":"table_xlsx","filename":"articles_by_cluster.xlsx"}] },
+      "assets":[{"id":"word_map","type":"sankey_png","filename":"word_map.png"},{"id":"topic_dendrogram","type":"vis_png","filename":"topic_dendrogram.png"},{"id":"words_by_cluster","type":"table_xlsx","filename":"words_by_cluster.xlsx"},{"id":"articles_by_cluster","type":"table_xlsx","filename":"articles_by_cluster.xlsx"}] },
 
     { "id":"4.2.1_co_citation_network","tabName":"coCitationNetwork","runner":"co_citation_network","compute":{"n":50},
+      "options":{
+        "method_parameters":{
+          "network_layout":{"inputId":"citlayout","label":"Network Layout","default":"auto","line":9742},
+          "clustering_algorithm":{"inputId":"cocitCluster","label":"Clustering Algorithm","default":"louvain","line":9763},
+          "network_size":{
+            "number_of_nodes":{"inputId":"citNodes","label":"Number of Nodes","default":50,"line":9785},
+            "repulsion_force":{"inputId":"cocit.repulsion","label":"Repulsion Force","default":0.5,"line":9799}
+          },
+          "filtering_options":{
+            "remove_isolated_nodes":{"inputId":"cit.isolates","label":"Remove Isolated Nodes","default":"yes","line":9822},
+            "minimum_number_of_edges":{"inputId":"citedges.min","label":"Minimum Number of Edges","default":2,"line":9833}
+          }
+        },
+        "graphical_parameters":{
+          "visual_appearance":{
+            "short_label":{"inputId":"citShortlabel","label":"Short Label","default":"Yes","line":9870},
+            "number_of_labels":{"inputId":"citLabels","label":"Number of Labels","default":1000,"line":9883}
+          },
+          "label_settings":{
+            "label_scaling_cex":{"inputId":"citlabel.cex","label":"Label Scaling (cex)","default":"Yes","line":9905},
+            "label_size":{"inputId":"citlabelsize","label":"Label Size","default":2,"line":9918}
+          },
+          "node_edge_settings":{
+            "node_shape":{"inputId":"cocit.shape","label":"Node Shape","default":"dot","line":9947},
+            "edge_size":{"inputId":"citedgesize","label":"Edge Size","default":2,"line":9960},
+            "node_shadow":{"inputId":"cocit.shadow","label":"Node Shadow","default":"Yes","line":9975},
+            "edit_nodes":{"inputId":"cocit.curved","label":"Edit Nodes","default":"No","line":9987}
+          }
+        },
+        "main_config_extra":{
+          "avoid_label_overlap":{"inputId":"citNoOverlap","label":"Avoid Label Overlap","default":true,"line":9707},
+          "field_separator":{"inputId":"citSep","label":"Field separator","default":";","line":9700}
+        }
+      },
       "params":[{"key":"field","values":[{"name":"cited_references","code":"references"},{"name":"cited_authors","code":"authors"},{"name":"cited_sources","code":"sources"}]}],
       "assets":[{"id":"network_html","type":"network_html","filename":"network.html"},{"id":"network_net","type":"network_net","filename":"network.net"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"},{"id":"degree_plot","type":"figure_png","filename":"degree_plot.png"}] },
 
-    { "id":"4.2.2_historiograph","tabName":"historiograph","runner":"historiograph","params":[],
-      "assets":[{"id":"network_html","type":"network_html","filename":"network.html"},{"id":"network_net","type":"network_net","filename":"network.net"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
+    { "id":"4.2.2_historiograph","tabName":"historiograph","runner":"historiograph",
+      "params":[{"key":"node_label","values":[{"name":"short_id","code":"short"},{"name":"document_title","code":"title"},{"name":"authors_keywords","code":"keywords"},{"name":"keywords_plus","code":"keywordsplus"}]}],
+      "assets":[{"id":"network","type":"vis_png","filename":"network.png"},{"id":"network_net","type":"network_net","filename":"network.net"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] },
 
     { "id":"4.3.1_collaboration_network","tabName":"collabNetwork","runner":"collaboration_network","compute":{"n":50},
+      "options":{
+        "method_parameters":{
+          "network_layout":{"inputId":"collayout","label":"Network Layout","default":"auto","line":10448},
+          "clustering_algorithm":{"inputId":"colCluster","label":"Clustering Algorithm","default":"louvain","line":10468},
+          "normalization_method":{"inputId":"colnormalize","label":"Normalization Method","default":"association","line":10491},
+          "network_size":{
+            "number_of_nodes":{"inputId":"colNodes","label":"Number of Nodes","default":50,"line":10521},
+            "repulsion_force":{"inputId":"col.repulsion","label":"Repulsion Force","default":0.5,"line":10535}
+          },
+          "filtering_options":{
+            "remove_isolated_nodes":{"inputId":"col.isolates","label":"Remove Isolated Nodes","default":"yes","line":10561},
+            "minimum_number_of_edges":{"inputId":"coledges.min","label":"Minimum Number of Edges","default":1,"line":10576},
+            "exclude_articles_over_20_authors":{"inputId":"col.filterMaxAuthors","label":"Exclude articles with > 20 authors","default":false,"line":10593}
+          }
+        },
+        "graphical_parameters":{
+          "visual_appearance":{
+            "opacity":{"inputId":"colAlpha","label":"Opacity","default":0.7,"line":10636},
+            "number_of_labels":{"inputId":"colLabels","label":"Number of Labels","default":1000,"line":10650}
+          },
+          "label_settings":{
+            "label_scaling_cex":{"inputId":"collabel.cex","label":"Label Scaling (cex)","default":"Yes","line":10675},
+            "label_size":{"inputId":"collabelsize","label":"Label Size","default":2,"line":10687}
+          },
+          "node_edge_settings":{
+            "node_shape":{"inputId":"col.shape","label":"Node Shape","default":"dot","line":10712},
+            "edge_size":{"inputId":"coledgesize","label":"Edge Size","default":5,"line":10731},
+            "node_shadow":{"inputId":"col.shadow","label":"Node Shadow","default":"Yes","line":10747},
+            "edit_nodes":{"inputId":"soc.curved","label":"Edit Nodes","default":"No","line":10759}
+          }
+        },
+        "main_config_extra":{
+          "avoid_label_overlap":{"inputId":"colNoOverlap","label":"Avoid Label Overlap","default":true,"line":10418}
+        }
+      },
       "params":[{"key":"field","values":[{"name":"authors","code":"authors"},{"name":"institutions","code":"universities"},{"name":"countries","code":"countries"}]}],
       "assets":[{"id":"network_html","type":"network_html","filename":"network.html"},{"id":"network_net","type":"network_net","filename":"network.net"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"},{"id":"degree_plot","type":"figure_png","filename":"degree_plot.png"}] },
 
     { "id":"4.3.2_countries_collaboration_world_map","tabName":"collabWorldMap","runner":"countries_collaboration_world_map","params":[],
-      "assets":[{"id":"plot","type":"figure_png","filename":"plot.png"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] }
+      "assets":[{"id":"plot","type":"plot_html","filename":"plot.html"},{"id":"table","type":"table_xlsx","filename":"table.xlsx"}] }
   ]
 }

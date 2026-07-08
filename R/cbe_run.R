@@ -58,7 +58,10 @@ cbe_run <- function(bib = NULL, only = NULL, resume = NULL, seed = 42L,
 
       out_dir <- file.path(run_dir, section$id, combo$name)
       dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+      # scenario params = swept value codes + the section's fixed compute params +
+      # (when present) the section's biblioshiny Options defaults, flattened into $ui.
       params_full <- c(combo$values, section$compute)
+      if (!is.null(section$options)) params_full$ui <- ui_defaults(section$options)
 
       t0 <- Sys.time()
       assets <- tryCatch(run_section(section, M, params_full, seed),
@@ -72,11 +75,32 @@ cbe_run <- function(bib = NULL, only = NULL, resume = NULL, seed = 42L,
         n_err <- n_err + 1L; log_info(sprintf("  [err ] %s (%.1fs)", combo$name, dt)); next
       }
       for (a in assets) {
-        fname <- sprintf("%s__%s__%s", section$id, combo$name, a$filename)
+        # self-describing filename <section>__<combo>__<asset>, EXCEPT interactive HTML
+        # widgets (+ their sankey/vis PNGs) keep a SHORT name: their `_files/` side-car dir
+        # has deeply-nested deps that would blow past Windows MAX_PATH (260) with the long
+        # prefix, silently breaking the widget (ERR_FILE_NOT_FOUND on visNetwork.js).
+        fname <- if (a$type %in% c("network_html", "plot_html", "sankey_png", "vis_png")) a$filename
+                 else sprintf("%s__%s__%s", section$id, combo$name, a$filename)
         path  <- file.path(out_dir, fname)
         ok <- tryCatch({ save_asset(a, path); TRUE },
                        error = function(e) { log_error(sprintf("  save %s: %s", path, conditionMessage(e))); FALSE })
         manifest[[asset_key(section$id, combo$name, a$id)]] <- list(status = if (ok) "ok" else "error", path = path)
+
+        # Every interactive widget HTML / SVG ALSO gets a static PNG snapshot (headless
+        # Chrome), so no view is HTML-only and the viewer can embed it. The PNG has no deps
+        # -> long self-describing name. An asset may set snapshot=FALSE to skip this (when it
+        # already emits its own accurate PNG, e.g. three_field's plotlySankey2png).
+        if (ok && grepl("\\.(html|svg)$", path, ignore.case = TRUE) && !isFALSE(a$snapshot)) {
+          png_name <- sprintf("%s__%s__%s", section$id, combo$name, sub("\\.(html|svg)$", ".png", a$filename))
+          png_path <- file.path(out_dir, png_name)
+          snap_ok  <- tryCatch(snapshot_widget_html(path, png_path,
+                                 vwidth  = if (!is.null(a$snap_w)) a$snap_w else 1200,
+                                 vheight = if (!is.null(a$snap_h)) a$snap_h else 900),
+                               error = function(e) { log_error(sprintf("  snapshot %s: %s", png_path, conditionMessage(e))); FALSE })
+          manifest[[asset_key(section$id, combo$name, paste0(a$id, "_png"))]] <-
+            list(status = if (isTRUE(snap_ok)) "ok" else "error", path = png_path)
+          if (!isTRUE(snap_ok)) log_error(sprintf("  snapshot failed: %s", png_name))
+        }
       }
       dt <- elapsed(t0); save_manifest(run_dir, manifest)
       timing[[length(timing) + 1L]] <- list(section = section$id, runner = section$runner,
@@ -109,4 +133,19 @@ cbe_run <- function(bib = NULL, only = NULL, resume = NULL, seed = 42L,
   log_info(sprintf("Done. scenarios ok=%d err=%d skipped=%d | wall=%.1fs (%.1f min) | run_dir=%s",
                    n_ok, n_err, n_skip, total_s, total_s / 60, run_dir))
   invisible(run_dir)
+}
+
+# Flatten a section's nested `options` block (biblioshiny UI defaults grouped by box,
+# from plan.json) into a flat named list: inputId -> default. A leaf is any node carrying
+# an `inputId`; other nodes are groups (boxes) to recurse into. Used to pass biblioshiny's
+# real Options defaults to the runners as `params$ui`.
+ui_defaults <- function(options) {
+  out <- list()
+  walk <- function(node) {
+    if (!is.list(node)) return(invisible())
+    if (!is.null(node$inputId)) { out[[node$inputId]] <<- node$default; return(invisible()) }
+    for (child in node) walk(child)
+  }
+  walk(options)
+  out
 }
