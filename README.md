@@ -6,6 +6,8 @@
 > browse the whole run in a self-contained HTML viewer. Plus an AST-based extractor that
 > reads biblioshiny's UI metadata straight from source.
 
+**▶ See it live — [browse a complete run in your browser](https://www.migueldiazmacedo.com/demo-corpus-extractor/).** Every biblioshiny section over a real Web of Science corpus, rendered by this tool into the self-contained viewer: figures, tables, interactive networks and Sankeys.
+
 **Re-run an entire science-mapping study after the corpus changes in one command and a few
 minutes — not days of manual point-and-click in the GUI.** That repeatability is the point.
 
