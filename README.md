@@ -11,6 +11,7 @@
 **Re-run an entire science-mapping study after the corpus changes in one command and a few
 minutes — not days of manual point-and-click in the GUI.** That repeatability is the point.
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24047222.svg)](https://doi.org/10.5281/zenodo.24047222)
 ![status: beta](https://img.shields.io/badge/status-beta-orange)
 ![license: GPL-3](https://img.shields.io/badge/license-GPL--3.0-blue)
 ![R 4.6.1](https://img.shields.io/badge/R-4.6.1-276DC3)
