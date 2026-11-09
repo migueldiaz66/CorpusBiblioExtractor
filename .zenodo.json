@@ -2,7 +2,7 @@
   "upload_type": "software",
   "title": "CorpusBiblioExtractor: exhaustive biblioshiny sweeps and UI-metadata extraction from a BibTeX corpus",
   "creators": [
-    { "name": "Díaz Macedo, Miguel" }
+    { "name": "Díaz Macedo, Miguel Jesús", "orcid": "0009-0000-0829-1584" }
   ],
   "license": "gpl-3.0",
   "description": "<p>R package that drives <em>bibliometrix</em> directly to run the full combinatorial sweep of biblioshiny's \"Main Configuration\" over a bibliographic corpus, materialises every output asset (tables, figures, interactive networks and Sankeys, Pajek nets) and renders the whole run in a self-contained HTML viewer. It also reads biblioshiny's UI metadata straight from source with an AST-based extractor.</p><p>A complete run over a Web of Science corpus is published at <a href=\"https://migueldiazmacedo.com/demo-corpus-extractor/\">https://migueldiazmacedo.com/demo-corpus-extractor/</a>. The method is described in <a href=\"https://migueldiazmacedo.com/bibliometria/bibliometria-reproducible/\">Bibliometr&iacute;a reproducible: automatizar el an&aacute;lisis de science mapping en una sola corrida</a>.</p>",
